@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Theme Variables ─────────────────────────────────────── */
+/* Light mode (default) */
+:root {
+  --c-950: 242 245 255;
+  --c-900: 255 255 255;
+  --c-850: 247 249 255;
+  --c-800: 237 241 252;
+  --c-700: 218 225 242;
+  --c-600: 196 207 228;
+  --c-500: 158 174 200;
+  --border-alpha: rgba(0,0,0,0.08);
+  --glass-bg: rgba(255,255,255,0.80);
+  --body-bg: #f0f4ff;
+  --body-bg-mesh:
+    radial-gradient(at 0% 0%, rgba(110,91,255,0.08) 0, transparent 45%),
+    radial-gradient(at 100% 0%, rgba(63,224,208,0.06) 0, transparent 45%);
+}
+
+/* Dark mode */
+.dark {
+  --c-950: 10 14 23;
+  --c-900: 13 18 32;
+  --c-850: 16 23 42;
+  --c-800: 20 28 51;
+  --c-700: 28 37 66;
+  --c-600: 42 52 88;
+  --c-500: 61 73 112;
+  --border-alpha: rgba(255,255,255,0.05);
+  --glass-bg: rgba(13,18,32,0.65);
+  --body-bg: #0a0e17;
+  --body-bg-mesh:
+    radial-gradient(at 0% 0%, rgba(110,91,255,0.14) 0, transparent 45%),
+    radial-gradient(at 100% 0%, rgba(63,224,208,0.10) 0, transparent 45%);
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--c-600)) transparent;
+}
+*::-webkit-scrollbar { width: 5px; height: 5px; }
+*::-webkit-scrollbar-thumb { background: rgb(var(--c-600)); border-radius: 999px; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* ─── Base ────────────────────────────────────────────────── */
+html, body, #root { height: 100%; }
+
+body {
+  background-color: var(--body-bg);
+  background-image: var(--body-bg-mesh);
+  background-attachment: fixed;
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease;
+}
+
+/* ─── Light mode text overrides ──────────────────────────── */
+/* In light mode, light-gray text becomes dark for readability */
+html:not(.dark) body { color: #1e293b; }
+
+html:not(.dark) .text-white,
+html:not(.dark) .font-display { color: #0f172a; }
+
+html:not(.dark) .text-slate-100,
+html:not(.dark) .text-slate-200 { color: #1e293b !important; }
+
+html:not(.dark) .text-slate-300 { color: #334155 !important; }
+html:not(.dark) .text-slate-400 { color: #475569 !important; }
+html:not(.dark) .text-slate-500 { color: #64748b !important; }
+
+/* Keep white text on colored backgrounds */
+html:not(.dark) .bg-accent-500 .text-white,
+html:not(.dark) .bg-accent-600 .text-white,
+html:not(.dark) [class*="bg-gradient"] .text-white,
+html:not(.dark) .text-white.keep-white { color: #ffffff !important; }
+
+/* ─── Light mode border overrides ────────────────────────── */
+html:not(.dark) [class*="border-white"] { border-color: rgba(0,0,0,0.09) !important; }
+html:not(.dark) .hover\:bg-white\/5:hover,
+html:not(.dark) .hover\:bg-white\/\[0\.03\]:hover { background-color: rgba(0,0,0,0.04) !important; }
+html:not(.dark) [class*="bg-white\/"] { background-color: rgba(0,0,0,0.04) !important; }
+
+/* ─── Light mode shadows ──────────────────────────────────── */
+html:not(.dark) .shadow-glass { box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04); }
+
+/* ─── Glass component ─────────────────────────────────────── */
+.glass {
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-alpha);
+}
+
+/* ─── Focus ring ──────────────────────────────────────────── */
+.focus-ring {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  box-shadow: 0 0 0 2px #6e5bff, 0 0 0 4px rgba(110,91,255,0.25);
+  border-radius: 6px;
+}
+
+/* ─── Skeleton shimmer ────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--c-800)) 25%,
+    rgb(var(--c-700)) 50%,
+    rgb(var(--c-800)) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.6s infinite linear;
+  border-radius: 6px;
+}
+
+/* ─── Loading bar ─────────────────────────────────────────── */
+.loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #6e5bff, #3fe0d0);
+  z-index: 9999;
+  box-shadow: 0 0 8px rgba(110,91,255,0.6);
+}
+
+/* ─── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
