@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useCallback } from 'react'
 import {AuthCtx, UserProfile} from "@/types";
-import {DEFAULT_USER} from "@/data/mock.ts";
+import {DEFAULT_USER} from "../data/mock.ts";
 
 const TOKEN_KEY = 'nova_token'
 const USER_KEY  = 'nova_user'

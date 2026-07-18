@@ -15,6 +15,7 @@ const Ecommerce         = lazy(() => import('./pages/Ecommerce'))
 const CalendarPage      = lazy(() => import('./pages/CalendarPage'))
 const Profile           = lazy(() => import('./pages/Profile'))
 const ProductsPage      = lazy(() => import('./pages/products/index'))
+const Upgrade = lazy(() => import('./pages/upgrade'))
 const CustomersTable    = lazy(() => import('./pages/tables/CustomersTable'))
 const InvoicesTable     = lazy(() => import('./pages/tables/InvoicesTable'))
 const FormElements      = lazy(() => import('./pages/forms/FormElements'))
@@ -47,6 +48,7 @@ function App() {
             <Route path="/calendar"            element={<CalendarPage />} />
             <Route path="/profile"             element={<Profile />} />
             <Route path="/products"            element={<ProductsPage />} />
+            <Route path="/upgrade" element={<Upgrade />} />
             <Route path="/tables/customers"    element={<CustomersTable />} />
             <Route path="/tables/invoices"     element={<InvoicesTable />} />
             <Route path="/forms/elements"      element={<FormElements />} />

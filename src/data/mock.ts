@@ -1,4 +1,11 @@
-import {Order, Customer, Invoice, CalendarEvent, Product, UserProfile, Msg} from '../types'
+import {Order, Customer, Invoice, CalendarEvent, Product, UserProfile, Msg, PlanKey} from '../types'
+import React, {useState} from "react";
+import {Building2, Check, Star, X, Zap} from "lucide-react";
+import {useAuth} from "@/context/AuthContext.tsx";
+import {toast} from "sonner";
+import {PageHeader} from "@/components/ui/PageHeader.tsx";
+import {motion} from "framer-motion";
+import clsx from "clsx";
 
 export const monthly = [
   { month: 'Jan', sales: 145, target: 200, revenue: 38 },
@@ -410,4 +417,96 @@ export const INIT_MSGS: Msg[] = [
     { id: 3, from: 'them', text: 'The radial chart for the monthly target is especially clean. Did you use Recharts?', time: '10:22 AM' },
     { id: 4, from: 'me',   text: 'Yeah, Recharts with a custom RadialBarChart. Took a bit of tinkering but worth it.', time: '10:23 AM' },
     { id: 5, from: 'them', text: 'Would love to collaborate on the next sprint. When are you available for a quick call?', time: '10:24 AM' },
+]
+
+export const plans: {
+    key: PlanKey
+    label: string
+    price: string
+    period: string
+    description: string
+    icon: React.FC<{ className?: string }>
+    color: string
+    badge?: string
+    cta: string
+    features: string[]
+}[] = [
+    {
+        key: 'Free',
+        label: 'Free',
+        price: '$0',
+        period: 'forever',
+        description: 'Perfect for individuals and small experiments.',
+        icon: Star,
+        color: 'from-slate-400 to-slate-500',
+        cta: 'Get Started',
+        features: [
+            'Up to 5 pages',
+            '1 user seat',
+            'Basic analytics',
+            'Community support',
+            '1 GB storage',
+        ],
+    },
+    {
+        key: 'Pro',
+        label: 'Pro',
+        price: '$29',
+        period: 'per month',
+        description: 'For growing teams who need more power and data.',
+        icon: Zap,
+        color: 'from-accent-400 to-glow-cyan',
+        badge: 'Most Popular',
+        cta: 'Upgrade to Pro',
+        features: [
+            'Unlimited pages',
+            'Up to 10 user seats',
+            'Advanced analytics & charts',
+            'Priority email support',
+            '50 GB storage',
+            'Custom domain',
+            'API access',
+            'Export reports (CSV/PDF)',
+        ],
+    },
+    {
+        key: 'Enterprise',
+        label: 'Enterprise',
+        price: '$99',
+        period: 'per month',
+        description: 'For large organizations that need security and scale.',
+        icon: Building2,
+        color: 'from-glow-amber to-glow-coral',
+        cta: 'Contact Sales',
+        features: [
+            'Everything in Pro',
+            'Unlimited user seats',
+            'SSO / SAML',
+            'Audit logs',
+            'Dedicated Slack support',
+            'Unlimited storage',
+            'SLA guarantee (99.9%)',
+            'Custom integrations',
+            'On-premise option',
+        ],
+    },
+]
+
+export const comparisonFeatures: {
+    label: string
+    free: boolean | string
+    pro: boolean | string
+    enterprise: boolean | string
+}[] = [
+    { label: 'Pages',            free: '5',        pro: 'Unlimited', enterprise: 'Unlimited' },
+    { label: 'User seats',       free: '1',        pro: '10',        enterprise: 'Unlimited' },
+    { label: 'Storage',          free: '1 GB',     pro: '50 GB',     enterprise: 'Unlimited' },
+    { label: 'Analytics',        free: 'Basic',    pro: 'Advanced',  enterprise: 'Advanced' },
+    { label: 'API access',       free: false,      pro: true,        enterprise: true },
+    { label: 'Custom domain',    free: false,      pro: true,        enterprise: true },
+    { label: 'Export (CSV/PDF)', free: false,      pro: true,        enterprise: true },
+    { label: 'SSO / SAML',      free: false,      pro: false,       enterprise: true },
+    { label: 'Audit logs',       free: false,      pro: false,       enterprise: true },
+    { label: 'SLA',              free: false,      pro: false,       enterprise: true },
+    { label: 'Support',          free: 'Community',pro: 'Priority',  enterprise: 'Dedicated Slack' },
 ]

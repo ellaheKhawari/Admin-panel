@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import {Link, NavLink, useLocation} from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import clsx from 'clsx'
 import * as Icons from 'lucide-react'
@@ -169,9 +169,13 @@ export const Sidebar: React.FC = () => {
           <div className="m-3 mb-4 rounded-xl border border-accent-500/20 bg-accent-500/8 p-4">
             <p className="text-xs font-semibold text-slate-900 dark:text-white">Upgrade to Pro</p>
             <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">Unlock advanced analytics.</p>
-            <button className="focus-ring mt-3 w-full rounded-md bg-accent-500 py-1.5 text-xs font-semibold text-white keep-white hover:bg-accent-600 transition-colors">
-              Upgrade
-            </button>
+            <Link
+               to="/upgrade"
+               onClick={() => setSidebarOpen(false)}
+               className="focus-ring mt-3 block w-full rounded-md bg-accent-500 py-1.5 text-center text-xs font-semibold text-white hover:bg-accent-600 transition-colors"
+              >
+               Upgrade
+            </Link>
           </div>
         )}
       </motion.aside>

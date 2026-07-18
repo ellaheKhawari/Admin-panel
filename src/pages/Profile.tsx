@@ -9,7 +9,7 @@ import { Button } from '../components/ui/Button'
 import { Field, Input, Textarea } from '../components/ui/Form'
 import { useAuth } from '../context/AuthContext'
 import {Msg} from "@/types";
-import {INIT_MSGS} from "@/data/mock.ts";
+import {INIT_MSGS} from "../data/mock.ts";
 
 const resizeImage = (file: File, maxSide = 512): Promise<string> =>
   new Promise((resolve, reject) => {

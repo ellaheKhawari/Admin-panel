@@ -75,3 +75,5 @@ export interface ThemeCtx {
 }
 
 export interface Msg { id: number; from: 'them' | 'me'; text: string; time: string }
+
+export type PlanKey = 'Free' | 'Pro' | 'Enterprise'
