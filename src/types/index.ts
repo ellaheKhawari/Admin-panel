@@ -73,3 +73,5 @@ export interface ThemeCtx {
     sidebarCollapsed: boolean
     toggleCollapsed: () => void
 }
+
+export interface Msg { id: number; from: 'them' | 'me'; text: string; time: string }

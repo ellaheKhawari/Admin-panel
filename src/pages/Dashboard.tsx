@@ -10,7 +10,6 @@ const Dashboard: React.FC = () => {
   return (
     <div>
       <PageHeader title="Dashboard" crumbs={['Overview']} />
-
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard icon={<Users className="h-5 w-5" />} label="Customers" value={3782} delta={11.01} delay={0} />
         <StatCard icon={<ShoppingBag className="h-5 w-5" />} label="Orders" value={5359} delta={-9.05} delay={0.05} />

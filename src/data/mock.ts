@@ -1,4 +1,4 @@
-import {Order, Customer, Invoice, CalendarEvent, Product, UserProfile} from '../types'
+import {Order, Customer, Invoice, CalendarEvent, Product, UserProfile, Msg} from '../types'
 
 export const monthly = [
   { month: 'Jan', sales: 145, target: 200, revenue: 38 },
@@ -403,3 +403,11 @@ export const DEFAULT_USER: UserProfile = {
     timezone: 'cet', twoFactor: false, emailNotif: true, pushNotif: false,
     smsNotif: false, plan: 'Pro',
 }
+
+export const INIT_MSGS: Msg[] = [
+    { id: 1, from: 'them', text: 'Hey! I checked your latest designs for the Nova dashboard — they look incredible. 🔥', time: '10:20 AM' },
+    { id: 2, from: 'me',   text: 'Thanks! I spent a lot of time on the data visualization part. Glad it shows.', time: '10:21 AM' },
+    { id: 3, from: 'them', text: 'The radial chart for the monthly target is especially clean. Did you use Recharts?', time: '10:22 AM' },
+    { id: 4, from: 'me',   text: 'Yeah, Recharts with a custom RadialBarChart. Took a bit of tinkering but worth it.', time: '10:23 AM' },
+    { id: 5, from: 'them', text: 'Would love to collaborate on the next sprint. When are you available for a quick call?', time: '10:24 AM' },
+]

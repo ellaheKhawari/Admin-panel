@@ -16,12 +16,10 @@ const sections = [
   { key: 'billing',      label: 'Billing',       icon: CreditCard },
   { key: 'appearance',   label: 'Appearance',    icon: Palette },
 ]
-
 const Settings: React.FC = () => {
   const [active, setActive] = useState('general')
   const { dark, setDark } = useTheme()
   const { user, updateProfile } = useAuth()
-
   const [generalForm, setGeneralForm] = useState({
     name: user?.name ?? '', email: user?.email ?? '',
     language: user?.language ?? 'en', timezone: user?.timezone ?? 'cet',
@@ -39,7 +37,6 @@ const Settings: React.FC = () => {
   }, [user?.email])
 
   const [saving, setSaving] = useState(false)
-
   const save = async (updates: Parameters<typeof updateProfile>[0], label: string) => {
     setSaving(true)
     await updateProfile(updates)
@@ -67,10 +64,7 @@ const Settings: React.FC = () => {
             ))}
           </nav>
         </Card>
-
-
         <Card className="lg:col-span-3" delay={0.05}>
-
 
           {active === 'general' && (
             <>
@@ -233,7 +227,6 @@ const Settings: React.FC = () => {
               </div>
             </>
           )}
-
         </Card>
       </div>
     </div>

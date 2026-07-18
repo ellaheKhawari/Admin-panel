@@ -8,6 +8,8 @@ import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
 import { Field, Input, Textarea } from '../components/ui/Form'
 import { useAuth } from '../context/AuthContext'
+import {Msg} from "@/types";
+import {INIT_MSGS} from "@/data/mock.ts";
 
 const resizeImage = (file: File, maxSide = 512): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -28,7 +30,6 @@ const resizeImage = (file: File, maxSide = 512): Promise<string> =>
     }
     reader.readAsDataURL(file)
   })
-
 const Avatar: React.FC<{ src: string | null; name: string; size?: string }> = ({ src, name, size = 'h-24 w-24' }) => {
   const initials = name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
   if (src) return <img src={src} alt={name} className={clsx(size, 'rounded-2xl object-cover ring-4 ring-white dark:ring-base-900')} />
@@ -38,19 +39,7 @@ const Avatar: React.FC<{ src: string | null; name: string; size?: string }> = ({
     </div>
   )
 }
-
-type Msg = { id: number; from: 'them' | 'me'; text: string; time: string }
-
-const INIT_MSGS: Msg[] = [
-  { id: 1, from: 'them', text: 'Hey! I checked your latest designs for the Nova dashboard — they look incredible. 🔥', time: '10:20 AM' },
-  { id: 2, from: 'me',   text: 'Thanks! I spent a lot of time on the data visualization part. Glad it shows.', time: '10:21 AM' },
-  { id: 3, from: 'them', text: 'The radial chart for the monthly target is especially clean. Did you use Recharts?', time: '10:22 AM' },
-  { id: 4, from: 'me',   text: 'Yeah, Recharts with a custom RadialBarChart. Took a bit of tinkering but worth it.', time: '10:23 AM' },
-  { id: 5, from: 'them', text: 'Would love to collaborate on the next sprint. When are you available for a quick call?', time: '10:24 AM' },
-]
-
 const now = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-
 const MessagePanel: React.FC<{ open: boolean; onClose: () => void; contactName: string }> = ({ open, onClose, contactName }) => {
   const [msgs, setMsgs] = useState<Msg[]>(INIT_MSGS)
   const [draft, setDraft] = useState('')

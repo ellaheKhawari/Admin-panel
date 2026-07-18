@@ -1,9 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* ─── Theme Variables ─────────────────────────────────────── */
-/* Light mode (default) */
 :root {
   --c-950: 242 245 255;
   --c-900: 255 255 255;
@@ -20,7 +17,6 @@
     radial-gradient(at 100% 0%, rgba(63,224,208,0.06) 0, transparent 45%);
 }
 
-/* Dark mode */
 .dark {
   --c-950: 10 14 23;
   --c-900: 13 18 32;
@@ -37,7 +33,6 @@
     radial-gradient(at 100% 0%, rgba(63,224,208,0.10) 0, transparent 45%);
 }
 
-/* ─── Scrollbar ───────────────────────────────────────────── */
 * {
   scrollbar-width: thin;
   scrollbar-color: rgb(var(--c-600)) transparent;
@@ -46,7 +41,6 @@
 *::-webkit-scrollbar-thumb { background: rgb(var(--c-600)); border-radius: 999px; }
 *::-webkit-scrollbar-track { background: transparent; }
 
-/* ─── Base ────────────────────────────────────────────────── */
 html, body, #root { height: 100%; }
 
 body {
@@ -58,36 +52,24 @@ body {
   transition: background-color 0.3s ease;
 }
 
-/* ─── Light mode text overrides ──────────────────────────── */
-/* In light mode, light-gray text becomes dark for readability */
 html:not(.dark) body { color: #1e293b; }
-
 html:not(.dark) .text-white,
 html:not(.dark) .font-display { color: #0f172a; }
-
 html:not(.dark) .text-slate-100,
 html:not(.dark) .text-slate-200 { color: #1e293b !important; }
-
 html:not(.dark) .text-slate-300 { color: #334155 !important; }
 html:not(.dark) .text-slate-400 { color: #475569 !important; }
 html:not(.dark) .text-slate-500 { color: #64748b !important; }
-
-/* Keep white text on colored backgrounds */
 html:not(.dark) .bg-accent-500 .text-white,
 html:not(.dark) .bg-accent-600 .text-white,
 html:not(.dark) [class*="bg-gradient"] .text-white,
 html:not(.dark) .text-white.keep-white { color: #ffffff !important; }
-
-/* ─── Light mode border overrides ────────────────────────── */
 html:not(.dark) [class*="border-white"] { border-color: rgba(0,0,0,0.09) !important; }
 html:not(.dark) .hover\:bg-white\/5:hover,
 html:not(.dark) .hover\:bg-white\/\[0\.03\]:hover { background-color: rgba(0,0,0,0.04) !important; }
 html:not(.dark) [class*="bg-white\/"] { background-color: rgba(0,0,0,0.04) !important; }
-
-/* ─── Light mode shadows ──────────────────────────────────── */
 html:not(.dark) .shadow-glass { box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04); }
 
-/* ─── Glass component ─────────────────────────────────────── */
 .glass {
   background-color: var(--glass-bg);
   backdrop-filter: blur(20px);
@@ -95,7 +77,6 @@ html:not(.dark) .shadow-glass { box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4
   border: 1px solid var(--border-alpha);
 }
 
-/* ─── Focus ring ──────────────────────────────────────────── */
 .focus-ring {
   outline: none;
 }
@@ -104,7 +85,6 @@ html:not(.dark) .shadow-glass { box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4
   border-radius: 6px;
 }
 
-/* ─── Skeleton shimmer ────────────────────────────────────── */
 .skeleton {
   background: linear-gradient(
     90deg,
@@ -117,7 +97,7 @@ html:not(.dark) .shadow-glass { box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4
   border-radius: 6px;
 }
 
-/* ─── Loading bar ─────────────────────────────────────────── */
+
 .loading-bar {
   position: fixed;
   top: 0;
@@ -128,7 +108,6 @@ html:not(.dark) .shadow-glass { box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4
   box-shadow: 0 0 8px rgba(110,91,255,0.6);
 }
 
-/* ─── Reduced motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;

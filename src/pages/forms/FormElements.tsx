@@ -11,7 +11,6 @@ const FormElements: React.FC = () => {
   return (
     <div>
       <PageHeader title="Form Elements" crumbs={['Forms', 'Elements']} />
-
       <div className="grid gap-5 lg:grid-cols-2">
         <Card delay={0}>
           <h3 className="mb-5 font-display text-lg font-semibold text-white">Input Fields</h3>
