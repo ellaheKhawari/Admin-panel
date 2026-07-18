@@ -9,7 +9,10 @@ import { useIsDesktop } from '../../utils/hooks'
 
 export const Layout: React.FC = () => {
   const location = useLocation()
-  const { sidebarCollapsed } = useTheme()
+  useEffect(() => {
+    setSidebarOpen(false)
+  }, [location.pathname])
+  const { sidebarCollapsed, setSidebarOpen } = useTheme()
   const isDesktop = useIsDesktop()
   const [loading, setLoading] = useState(false)
   const sidebarWidth = isDesktop ? (sidebarCollapsed ? 80 : 264) : 0

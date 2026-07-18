@@ -107,7 +107,6 @@ export const Sidebar: React.FC = () => {
                                 <li key={child.to}>
                                   <NavLink
                                     to={child.to}
-                                    onClick={() => !isDesktop && setSidebarOpen(false)}
                                     className={({ isActive }) =>
                                       clsx(
                                         'focus-ring block rounded-md px-2.5 py-1.5 text-sm transition-colors',
@@ -131,7 +130,6 @@ export const Sidebar: React.FC = () => {
                     <li key={item.to}>
                       <NavLink
                         to={item.to!}
-                        onClick={() => !isDesktop && setSidebarOpen(false)}
                         className={({ isActive }) =>
                           clsx(
                             'focus-ring relative flex items-center gap-3 rounded-lg px-2.5 py-2.5 text-sm font-medium transition-colors',
