@@ -1,55 +1,79 @@
-import React from 'react'
+import React from "react"
+import { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { Layout } from './components/layout/Layout'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Toaster } from 'sonner'
 import { useAuth } from './context/AuthContext'
 
-import Dashboard from './pages/Dashboard'
-import Ecommerce from './pages/Ecommerce'
-import CalendarPage from './pages/CalendarPage'
-import Profile from './pages/Profile'
-import CustomersTable from './pages/tables/CustomersTable'
-import InvoicesTable from './pages/tables/InvoicesTable'
-import FormElements from './pages/forms/FormElements'
-import NewProduct from './pages/forms/NewProduct'
-import BasicCharts from './pages/charts/BasicCharts'
-import PieCharts from './pages/charts/PieCharts'
-import Settings from './pages/Settings'
-import NotFound from './pages/NotFound'
+const Loading           = lazy(() => import('./pages/loading/index'))
+const Layout            = lazy(() => import('./components/layout/Layout').then(m => ({ default: m.Layout })))
+const Login             = lazy(() => import('./pages/auth/Login'))
+const Register          = lazy(() => import('./pages/auth/Register'))
+const ForgotPassword    = lazy(() => import('./pages/auth/ForgotPassword'))
+const Dashboard         = lazy(() => import('./pages/Dashboard'))
+const Ecommerce         = lazy(() => import('./pages/Ecommerce'))
+const CalendarPage      = lazy(() => import('./pages/CalendarPage'))
+const Profile           = lazy(() => import('./pages/Profile'))
+const ProductsPage      = lazy(() => import('./pages/products/index'))
+const CustomersTable    = lazy(() => import('./pages/tables/CustomersTable'))
+const InvoicesTable     = lazy(() => import('./pages/tables/InvoicesTable'))
+const FormElements      = lazy(() => import('./pages/forms/FormElements'))
+const NewProduct        = lazy(() => import('./pages/forms/NewProduct'))
+const BasicCharts       = lazy(() => import('./pages/charts/BasicCharts'))
+const PieCharts         = lazy(() => import('./pages/charts/PieCharts'))
+const Settings          = lazy(() => import('./pages/Settings'))
+const NotFound          = lazy(() => import('./pages/NotFound'))
 
-import Login from './pages/auth/Login'
-import Register from './pages/auth/Register'
-import ForgotPassword from './pages/auth/ForgotPassword'
+const queryClient = new QueryClient({
+    defaultOptions: { queries: { staleTime: 60_000, retry: 1 } }
+})
 
-/** Redirect to /auth/login if not authenticated */
 const Protected: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isAuthed } = useAuth()
-  if (!isAuthed) return <Navigate to="/auth/login" replace />
-  return <>{children}</>
+    const { isAuthed } = useAuth()
+    if (!isAuthed) return <Navigate to="/auth/login" replace />
+    return <>{children}</>
 }
 
-const App: React.FC = () => {
-  return (
-    <Routes>
-      <Route path="/auth/login" element={<Login />} />
-      <Route path="/auth/register" element={<Register />} />
-      <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+function App() {
+    return (
+        <QueryClientProvider client={queryClient}>
+            <Suspense fallback={<Loading />}>
+                <Routes>
+                    <Route path="/auth/login"           element={<Login />} />
+                    <Route path="/auth/register"        element={<Register />} />
+                    <Route path="/auth/forgot-password" element={<ForgotPassword />} />
 
-      <Route element={<Protected><Layout /></Protected>}>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/ecommerce" element={<Ecommerce />} />
-        <Route path="/calendar" element={<CalendarPage />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/tables/customers" element={<CustomersTable />} />
-        <Route path="/tables/invoices" element={<InvoicesTable />} />
-        <Route path="/forms/elements" element={<FormElements />} />
-        <Route path="/forms/new-product" element={<NewProduct />} />
-        <Route path="/charts/basic" element={<BasicCharts />} />
-        <Route path="/charts/pie" element={<PieCharts />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
-  )
+                    <Route element={<Protected><Layout /></Protected>}>
+                        <Route path="/"                    element={<Dashboard />} />
+                        <Route path="/ecommerce"           element={<Ecommerce />} />
+                        <Route path="/calendar"            element={<CalendarPage />} />
+                        <Route path="/profile"             element={<Profile />} />
+                        <Route path="/products"            element={<ProductsPage />} />
+                        <Route path="/tables/customers"    element={<CustomersTable />} />
+                        <Route path="/tables/invoices"     element={<InvoicesTable />} />
+                        <Route path="/forms/elements"      element={<FormElements />} />
+                        <Route path="/forms/new-product"   element={<NewProduct />} />
+                        <Route path="/charts/basic"        element={<BasicCharts />} />
+                        <Route path="/charts/pie"          element={<PieCharts />} />
+                        <Route path="/settings"            element={<Settings />} />
+                        <Route path="*"                    element={<NotFound />} />
+                    </Route>
+                </Routes>
+            </Suspense>
+
+            <Toaster
+                position="top-right"
+                richColors
+                expand={false}
+                toastOptions={{
+                    duration: 3500,
+                    classNames: {
+                        toast: '!rounded-xl !font-sans !text-sm !shadow-glass',
+                    },
+                }}
+            />
+        </QueryClientProvider>
+    )
 }
 
 export default App
