@@ -1,10 +1,3 @@
-/**
- * Fake auth system — simulates a /me endpoint using localStorage.
- * Token: "nova_token"  |  User: "nova_user"
- *
- * In production, replace fakeLogin/fakeRegister with real API calls
- * and fakeMe() with fetch('/api/me', { headers: { Authorization: `Bearer ${token}` } })
- */
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react'
 
 export type UserProfile = {
@@ -15,7 +8,7 @@ export type UserProfile = {
   location: string
   bio: string
   role: string
-  avatar: string | null    // base64 data URL or null
+  avatar: string | null
   website: string
   joinedAt: string
   language: string
@@ -50,7 +43,6 @@ const DEFAULT_USER: UserProfile = {
 const STORAGE_TOKEN_KEY = 'nova_token'
 const STORAGE_USER_KEY = 'nova_user'
 
-/* ── Helpers ───────────────────────────────────────────── */
 const generateToken = (email: string) =>
   btoa(`nova:${email}:${Date.now()}:${Math.random().toString(36)}`)
 
@@ -66,20 +58,14 @@ const loadUser = (): UserProfile | null => {
 
 const loadToken = () => localStorage.getItem(STORAGE_TOKEN_KEY)
 
-/* ── Context ────────────────────────────────────────────── */
 type AuthCtx = {
   user: UserProfile | null
   token: string | null
   isAuthed: boolean
-  /** Simulates POST /auth/login */
   fakeLogin: (email: string, password: string) => Promise<void>
-  /** Simulates POST /auth/register */
   fakeRegister: (name: string, email: string, password: string) => Promise<void>
-  /** Simulates GET /me */
   fakeMe: () => Promise<UserProfile>
-  /** Simulates PATCH /me */
   updateProfile: (updates: Partial<UserProfile>) => Promise<void>
-  /** Simulates POST /me/avatar */
   uploadAvatar: (dataUrl: string) => Promise<void>
   logout: () => void
 }
@@ -90,7 +76,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<UserProfile | null>(null)
   const [token, setToken] = useState<string | null>(null)
 
-  /* Bootstrap from localStorage on mount */
   useEffect(() => {
     const storedToken = loadToken()
     if (storedToken) {
