@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Loader2 } from 'lucide-react'
+import { toast } from 'sonner'
 import { AuthLayout } from './AuthLayout'
 import { Field, Input, Checkbox } from '../../components/ui/Form'
 import { Button } from '../../components/ui/Button'
@@ -15,8 +16,17 @@ const Register: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    await fakeRegister(`${form.firstName} ${form.lastName}`, form.email, form.password)
-    navigate('/')
+    try {
+      await fakeRegister(`${form.firstName} ${form.lastName}`, form.email, form.password)
+      toast.success(`Welcome to Nova, ${form.firstName}! 🎉`, {
+        description: 'Your account has been created.',
+      })
+      navigate('/')
+    } catch {
+      toast.error('Registration failed', { description: 'Please try again.' })
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -44,7 +54,7 @@ const Register: React.FC = () => {
       </form>
       <p className="mt-6 text-center text-sm text-slate-500">
         Already have an account?{' '}
-        <Link to="/auth/login" className="text-accent-500 hover:text-accent-400 font-medium">Sign in</Link>
+        <Link to="/auth/login" className="font-medium text-accent-500 hover:text-accent-400">Sign in</Link>
       </p>
     </AuthLayout>
   )

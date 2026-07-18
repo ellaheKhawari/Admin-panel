@@ -12,7 +12,7 @@ export type Product = {
   sold: number
   image: string
   tags: string[]
-  createdAt: string
+  createdAt?: string
 }
 
 const u = (id: string) =>

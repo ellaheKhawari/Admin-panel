@@ -1,10 +1,14 @@
+import { toast } from 'sonner'
 import React, { useMemo, useState } from 'react'
-import { Search, ArrowUpDown, MoreVertical } from 'lucide-react'
+import { Search, ArrowUpDown, MoreVertical, Trash2, UserCheck } from 'lucide-react'
+import { toast } from 'sonner'
 import { PageHeader } from '../../components/ui/PageHeader'
 import { Card } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
 import { customers } from '../../data/mock'
+import { toast } from 'sonner'
 import type { Customer } from '../../types'
+import { useState as useStateAlias } from 'react'
 
 const PAGE_SIZE = 5
 
@@ -90,7 +94,7 @@ const CustomersTable: React.FC = () => {
                   <td className="px-6 py-3.5 text-slate-400">{c.joined}</td>
                   <td className="px-6 py-3.5"><Badge status={c.status} /></td>
                   <td className="px-6 py-3.5 text-right">
-                    <button className="focus-ring rounded-lg p-1.5 text-slate-500 hover:bg-white/5">
+                    <button className="focus-ring rounded-lg p-1.5 text-slate-500 hover:bg-white/5" onClick={() => toast(`Manage ${c.name}`, { action: { label: "Delete", onClick: () => toast.success(`${c.name} removed.`) } })}>
                       <MoreVertical className="h-4 w-4" />
                     </button>
                   </td>

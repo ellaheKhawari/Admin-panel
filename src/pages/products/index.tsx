@@ -18,7 +18,6 @@ import { Link } from 'react-router-dom'
 const categories = ['All', 'Laptops', 'Smartphones', 'Audio', 'Wearables', 'Tablets', 'Monitors', 'Accessories']
 const statuses = ['All', 'Active', 'Draft', 'Archived']
 
-// ── Edit Drawer ────────────────────────────────────────────────────────────
 const EditDrawer: React.FC<{
   product: Product | null
   onClose: () => void
@@ -44,20 +43,17 @@ const EditDrawer: React.FC<{
     <AnimatePresence>
       {product && (
         <>
-          {/* Overlay */}
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
             onClick={onClose}
           />
-          {/* Drawer */}
           <motion.div
             initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
             transition={{ type: 'spring', stiffness: 380, damping: 36 }}
             className="fixed right-0 inset-y-0 z-50 flex w-full max-w-lg flex-col shadow-2xl overflow-hidden"
             style={{ background: 'var(--glass-bg)', backdropFilter: 'blur(20px)', borderLeft: '1px solid var(--border-alpha)' }}
           >
-            {/* Header */}
             <div className="flex items-center justify-between p-5 border-b" style={{ borderColor: 'var(--border-alpha)' }}>
               <div>
                 <h2 className="font-display text-lg font-semibold text-slate-900 dark:text-white">Edit Product</h2>
@@ -68,9 +64,7 @@ const EditDrawer: React.FC<{
               </button>
             </div>
 
-            {/* Scrollable body */}
             <div className="flex-1 overflow-y-auto p-5 space-y-5">
-              {/* Product image preview */}
               <div className="relative overflow-hidden rounded-xl bg-base-800/40 h-48 flex items-center justify-center">
                 <img src={form.image} alt={form.name}
                   className="h-full w-full object-cover"
@@ -133,7 +127,6 @@ const EditDrawer: React.FC<{
               </Field>
             </div>
 
-            {/* Footer */}
             <div className="p-5 border-t flex gap-3" style={{ borderColor: 'var(--border-alpha)' }}>
               <Button variant="outline" fullWidth onClick={onClose}>Cancel</Button>
               <Button fullWidth onClick={handleSave} disabled={saving}>
@@ -148,7 +141,6 @@ const EditDrawer: React.FC<{
   )
 }
 
-// ── Delete Confirm Modal ───────────────────────────────────────────────────
 const DeleteModal: React.FC<{
   product: Product | null
   onClose: () => void
@@ -185,7 +177,6 @@ const DeleteModal: React.FC<{
   </AnimatePresence>
 )
 
-// ── Product Card (grid view) ───────────────────────────────────────────────
 const ProductCard: React.FC<{
   product: Product
   index: number
@@ -206,7 +197,6 @@ const ProductCard: React.FC<{
       layout
       className="glass group relative rounded-xl2 shadow-glass overflow-hidden"
     >
-      {/* Image */}
       <div className="relative h-48 overflow-hidden bg-base-800/40">
         <img
           src={product.image} alt={product.name}
@@ -217,10 +207,8 @@ const ProductCard: React.FC<{
             t.parentElement!.style.background = 'rgb(var(--c-700))'
           }}
         />
-        {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-base-900/70 via-transparent to-transparent" />
 
-        {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
           <Badge status={product.status} />
           {discount && (
@@ -235,7 +223,6 @@ const ProductCard: React.FC<{
           )}
         </div>
 
-        {/* Menu */}
         <div className="absolute top-3 right-3">
           <div className="relative">
             <button
@@ -271,13 +258,11 @@ const ProductCard: React.FC<{
         </div>
       </div>
 
-      {/* Info */}
       <div className="p-4">
         <span className="text-xs font-medium text-accent-500">{product.category}</span>
         <h3 className="mt-0.5 font-medium text-slate-900 dark:text-slate-100 leading-snug line-clamp-1">{product.name}</h3>
         <p className="mt-1 text-xs text-slate-400 line-clamp-2">{product.shortDesc}</p>
 
-        {/* Rating + sold */}
         <div className="mt-3 flex items-center gap-3 text-xs text-slate-400 dark:text-slate-500">
           <span className="flex items-center gap-1 text-amber-500">
             <Star className="h-3.5 w-3.5 fill-current" /> {product.rating}
@@ -291,7 +276,6 @@ const ProductCard: React.FC<{
           </span>
         </div>
 
-        {/* Price + actions */}
         <div className="mt-4 flex items-center justify-between">
           <div>
             <span className="font-display text-lg font-semibold text-slate-900 dark:text-white">
@@ -313,7 +297,6 @@ const ProductCard: React.FC<{
   )
 }
 
-// ── Products Page ──────────────────────────────────────────────────────────
 const ProductsPage: React.FC = () => {
   const [items, setItems] = useState<Product[]>(initialProducts)
   const [view, setView] = useState<'grid' | 'list'>('grid')
@@ -377,7 +360,6 @@ const ProductsPage: React.FC = () => {
         }
       />
 
-      {/* Stats strip */}
       <div className="mb-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
           { label: 'Total Products', value: items.length, icon: Package, color: 'text-accent-500' },
@@ -398,7 +380,6 @@ const ProductsPage: React.FC = () => {
         ))}
       </div>
 
-      {/* Filters */}
       <Card noPad delay={0.05}>
         <div className="flex flex-wrap items-center gap-3 p-4 sm:p-5">
           {/* Search */}
@@ -411,7 +392,6 @@ const ProductsPage: React.FC = () => {
             />
           </div>
 
-          {/* Category filter */}
           <div className="flex flex-wrap gap-1.5">
             {categories.map(c => (
               <button key={c} onClick={() => setCategory(c)}
@@ -421,7 +401,6 @@ const ProductsPage: React.FC = () => {
             ))}
           </div>
 
-          {/* Status + sort + view */}
           <div className="ml-auto flex items-center gap-2">
             <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
               className="focus-ring rounded-lg border bg-base-800/40 px-2.5 py-1.5 text-xs text-slate-600 dark:text-slate-300 transition-colors"
@@ -441,7 +420,6 @@ const ProductsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Sort strip */}
         <div className="flex items-center gap-4 px-5 pb-3 text-xs text-slate-400">
           <span>{filtered.length} products</span>
           <span>Sort by:</span>
@@ -452,7 +430,6 @@ const ProductsPage: React.FC = () => {
         </div>
       </Card>
 
-      {/* Grid view */}
       {view === 'grid' && (
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <AnimatePresence mode="popLayout">
@@ -471,7 +448,6 @@ const ProductsPage: React.FC = () => {
         </div>
       )}
 
-      {/* List view */}
       {view === 'list' && (
         <Card className="mt-5" noPad delay={0.1}>
           <div className="overflow-x-auto">
@@ -558,10 +534,8 @@ const ProductsPage: React.FC = () => {
         </Card>
       )}
 
-      {/* Edit Drawer */}
       <EditDrawer product={editTarget} onClose={() => setEditTarget(null)} onSave={handleSave} />
 
-      {/* Delete Modal */}
       <DeleteModal product={deleteTarget} onClose={() => setDeleteTarget(null)} onConfirm={handleDelete} />
     </div>
   )

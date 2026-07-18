@@ -8,7 +8,7 @@ import { useTheme } from '../../context/ThemeContext'
 import { useIsDesktop } from '../../utils/hooks'
 
 const Icon: React.FC<{ name: string; className?: string }> = ({ name, className }) => {
-  const Cmp = (Icons as Record<string, React.FC<{ className?: string }>>)[name]
+  const Cmp = (Icons as unknown as Record<string, React.FC<{ className?: string }>>)[name]
   return Cmp ? <Cmp className={className} /> : null
 }
 
@@ -29,7 +29,6 @@ export const Sidebar: React.FC = () => {
 
   return (
     <>
-      {/* Mobile backdrop */}
       <AnimatePresence>
         {sidebarOpen && !isDesktop && (
           <motion.div
@@ -44,7 +43,6 @@ export const Sidebar: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Sidebar */}
       <motion.aside
         initial={false}
         animate={{ width: sidebarWidth, x: sidebarX }}
@@ -57,7 +55,6 @@ export const Sidebar: React.FC = () => {
           WebkitBackdropFilter: 'blur(20px)',
         }}
       >
-        {/* Logo */}
         <div className="flex h-16 shrink-0 items-center gap-2.5 px-5">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-accent-400 to-glow-cyan text-sm font-bold text-white shadow-glow">
             N
@@ -69,7 +66,6 @@ export const Sidebar: React.FC = () => {
           )}
         </div>
 
-        {/* Nav */}
         <nav className="flex-1 overflow-y-auto overflow-x-hidden px-3 pb-4">
           {nav.map((group) => (
             <div key={group.section} className="mb-4">
@@ -174,7 +170,6 @@ export const Sidebar: React.FC = () => {
           ))}
         </nav>
 
-        {/* Upgrade card (hide when collapsed) */}
         {(!sidebarCollapsed || !isDesktop) && (
           <div className="m-3 mb-4 rounded-xl border border-accent-500/20 bg-accent-500/8 p-4">
             <p className="text-xs font-semibold text-slate-900 dark:text-white">Upgrade to Pro</p>

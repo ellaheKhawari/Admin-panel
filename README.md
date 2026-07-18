@@ -1,6 +1,6 @@
-# Nova — Admin Panel
+# Nova — Admin Panel v3
 
-A complete, animated admin dashboard — React 18 + TypeScript + Tailwind CSS + Framer Motion + Recharts.
+React 18 + TypeScript + Tailwind CSS + Framer Motion + Recharts + Sonner + TanStack Query
 
 ## Quick start
 
@@ -9,68 +9,55 @@ npm install
 npm run dev
 ```
 
-Visit `http://localhost:5173` — you'll land on the Login page.  
-**Any email + any password** logs you in (fake auth, no backend needed).
+→ `http://localhost:5173` — lands on Login. **Any email + any password** works.
 
 ---
 
-## What's included
+## v3 Changes
 
-### Auth (fake token system)
-- Token stored in `localStorage` as `nova_token`
-- User profile stored in `localStorage` as `nova_user`
-- Simulates `/me`, `/me PATCH`, `/me/avatar POST` endpoints
-- Changes (name, email, bio, avatar, notification prefs) **persist across page refreshes**
-- Logout clears the token and redirects to login
+### Bug fixes
+- **Navigation blank screen** — Root cause: `useState` in AuthContext was async (useEffect-based). On first render `isAuthed = false`, causing Protected to redirect to `/auth/login` mid-navigation. Fixed with **synchronous lazy init** from localStorage: `useState(() => localStorage.getItem(TOKEN_KEY))`.
+- **Skeleton caused blank screen** — Removed the `showSkeleton` gate that hid `<Outlet />`. Now Outlet always renders; the loading bar is purely cosmetic.
 
-### Pages
-| Route | Page |
+### Architecture
+- **`lazy` + `Suspense`**: Every page is code-split. First-visit loads the chunk, subsequent visits are instant.
+- **Loading screen**: Full-screen animated Nova spinner (Framer Motion) shown during Suspense fallback.
+- **`@tanstack/react-query`**: QueryClient provider wraps the app, ready for real API calls.
+- **`sonner`**: Toast notifications for login welcome, profile save, avatar upload, product CRUD, settings save.
+
+### New: Products page (`/products`)
+- 12 real products with Unsplash photos that match each product
+- Grid view (cards with hover scale + image zoom) and List view (full table)
+- Search by name, SKU, category
+- Filter by category tabs and status dropdown
+- Sort by name, price, stock, sold
+- **Edit drawer** — slides in from right, edit all fields, saves with toast
+- **Delete modal** — confirm dialog, removes from list with toast
+- Stats strip: total, active, out-of-stock, inventory value
+
+### Toasts (Sonner, all in English)
+| Event | Toast |
 |---|---|
-| `/auth/login` | Sign In |
-| `/auth/register` | Create account |
-| `/auth/forgot-password` | Reset link |
-| `/` | Dashboard (stats, charts, orders) |
-| `/ecommerce` | Products + orders table |
-| `/calendar` | Month grid with events |
-| `/profile` | Overview / Edit / Security tabs |
-| `/tables/customers` | Searchable, sortable, paginated table |
-| `/tables/invoices` | Filter by status |
-| `/forms/elements` | Inputs, toggles, checkboxes |
-| `/forms/new-product` | Drag-and-drop image upload form |
-| `/charts/basic` | Line, Bar, Area charts |
-| `/charts/pie` | Pie + Radial charts |
-| `/settings` | General, Notifications, Billing, Appearance |
-
-### Features
-- ✅ Fully responsive: off-canvas sidebar on mobile, collapsible on desktop
-- ✅ Dark / Light mode toggle (Settings → Appearance or header button)
-- ✅ Loading bar + skeleton screens during page transitions
-- ✅ Profile image upload (resized to 256×256, stored as base64)
-- ✅ All form changes persist in localStorage (name, email, bio, prefs, avatar)
-- ✅ `prefers-reduced-motion` respected
+| Login | "Welcome back, Amir! 👋" |
+| Register | "Account created! Welcome to Nova, Amir! 🎉" |
+| Logout | "Signed out successfully." |
+| Profile save | "Profile updated successfully!" |
+| Avatar upload | "Profile photo updated!" |
+| Product edit | "\"MacBook Pro 14" M4 Pro\" updated successfully." |
+| Product delete | "\"MacBook Pro 14" M4 Pro\" has been deleted." |
+| Settings save | "Settings saved!" |
 
 ---
 
-## Swap in a real backend
-
-When you're ready to connect a real API, replace `src/context/AuthContext.tsx`:
+## Replace with real backend
 
 ```ts
-// fakeLogin → real POST /auth/login
-const res = await fetch('/api/auth/login', {
-  method: 'POST',
-  body: JSON.stringify({ email, password }),
-})
-const { token, user } = await res.json()
-localStorage.setItem('nova_token', token)
-
-// fakeMe → real GET /me
-const me = await fetch('/api/me', {
-  headers: { Authorization: `Bearer ${localStorage.getItem('nova_token')}` }
-})
-
-// updateProfile → real PATCH /me
-// uploadAvatar → real POST /me/avatar (multipart or base64)
+// AuthContext.tsx
+const fakeLogin = async (email, password) => {
+  const { token, user } = await fetch('/api/auth/login', {
+    method: 'POST', body: JSON.stringify({ email, password })
+  }).then(r => r.json())
+  localStorage.setItem('nova_token', token)
+  // ...
+}
 ```
-
-Everything else (UI, routing, state) stays the same.

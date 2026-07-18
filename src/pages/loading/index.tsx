@@ -5,7 +5,6 @@ const Loading: React.FC = () => (
   <div className="fixed inset-0 z-[9999] flex items-center justify-center"
     style={{ background: 'var(--body-bg)' }}>
 
-    {/* Ambient glow blobs */}
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-accent-500/10 blur-3xl" />
       <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-glow-cyan/8 blur-3xl" />
@@ -17,9 +16,7 @@ const Loading: React.FC = () => (
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className="relative flex flex-col items-center gap-6"
     >
-      {/* Spinning ring + logo */}
       <div className="relative flex h-20 w-20 items-center justify-center">
-        {/* Outer spinning ring */}
         <motion.svg
           className="absolute inset-0 h-full w-full"
           viewBox="0 0 80 80"
@@ -36,7 +33,6 @@ const Loading: React.FC = () => (
           </defs>
         </motion.svg>
 
-        {/* Inner slower ring */}
         <motion.svg
           className="absolute inset-2 h-16 w-16"
           viewBox="0 0 64 64"
@@ -48,13 +44,11 @@ const Loading: React.FC = () => (
             strokeLinecap="round" strokeDasharray="20 120" />
         </motion.svg>
 
-        {/* Nova logo center */}
         <div className="relative z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-accent-400 to-glow-cyan text-lg font-bold text-white shadow-glow">
           N
         </div>
       </div>
 
-      {/* Brand name */}
       <div className="flex flex-col items-center gap-1.5">
         <motion.p
           className="font-display text-xl font-semibold text-slate-900 dark:text-white"
@@ -64,7 +58,6 @@ const Loading: React.FC = () => (
           Nova
         </motion.p>
 
-        {/* Animated dots */}
         <div className="flex items-center gap-1.5">
           {[0, 1, 2].map((i) => (
             <motion.span

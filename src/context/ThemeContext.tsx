@@ -2,48 +2,41 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 
 type ThemeCtx = {
   dark: boolean
+  setDark: (v: boolean) => void
   toggleDark: () => void
   sidebarOpen: boolean
   setSidebarOpen: (v: boolean) => void
   sidebarCollapsed: boolean
   toggleCollapsed: () => void
-  isDesktop: boolean
 }
 
 const Ctx = createContext<ThemeCtx | null>(null)
 
+const THEME_KEY = 'nova_theme'
+
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [dark, setDark] = useState(true)
+  // ✅ Synchronously read from localStorage so dark class is applied before first paint
+  const [dark, setDarkState] = useState<boolean>(() => {
+    try {
+      const stored = localStorage.getItem(THEME_KEY)
+      return stored !== null ? stored === 'dark' : true   // default: dark
+    } catch {
+      return true
+    }
+  })
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
-  const [isDesktop, setIsDesktop] = useState(() => window.innerWidth >= 1024)
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark)
+    try { localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light') } catch {}
   }, [dark])
 
-  useEffect(() => {
-    const mq = window.matchMedia('(min-width: 1024px)')
-    const handler = (e: MediaQueryListEvent) => {
-      setIsDesktop(e.matches)
-      if (e.matches) setSidebarOpen(false)
-    }
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
-  }, [])
+  const setDark = (v: boolean) => setDarkState(v)
+  const toggleDark = () => setDarkState((d) => !d)
 
   return (
-    <Ctx.Provider
-      value={{
-        dark,
-        toggleDark: () => setDark((d) => !d),
-        sidebarOpen,
-        setSidebarOpen,
-        sidebarCollapsed,
-        toggleCollapsed: () => setSidebarCollapsed((c) => !c),
-        isDesktop,
-      }}
-    >
+    <Ctx.Provider value={{ dark, setDark, toggleDark, sidebarOpen, setSidebarOpen, sidebarCollapsed, toggleCollapsed: () => setSidebarCollapsed((c) => !c) }}>
       {children}
     </Ctx.Provider>
   )
@@ -51,6 +44,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
 export const useTheme = () => {
   const ctx = useContext(Ctx)
-  if (!ctx) throw new Error('useTheme must be used within ThemeProvider')
+  if (!ctx) throw new Error('useTheme must be inside ThemeProvider')
   return ctx
 }
