@@ -13,11 +13,9 @@ const typeColor: Record<string, string> = {
   reminder: 'bg-amber-500',
   launch: 'bg-emerald-500',
 }
-
 const CalendarPage: React.FC = () => {
   const [cursor, setCursor] = useState(new Date(2026, 5, 1))
   const [selected, setSelected] = useState('2026-06-30')
-
   const grid = useMemo(() => {
     const year = cursor.getFullYear()
     const month = cursor.getMonth()
@@ -32,7 +30,6 @@ const CalendarPage: React.FC = () => {
     }
     return cells
   }, [cursor])
-
   const eventsFor = (date: string) => calendarEvents.filter((e) => e.date === date)
   const selectedEvents = eventsFor(selected)
 

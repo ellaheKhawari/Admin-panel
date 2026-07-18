@@ -7,7 +7,6 @@ import { Button } from '../../components/ui/Button'
 import { invoices } from '../../data/mock'
 
 const filters = ['All', 'Paid', 'Unpaid', 'Overdue']
-
 const InvoicesTable: React.FC = () => {
   const [active, setActive] = useState('All')
   const rows = invoices.filter((i) => active === 'All' || i.status === active)

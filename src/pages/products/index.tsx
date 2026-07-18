@@ -18,7 +18,6 @@ import {Product} from "@/types";
 
 const categories = ['All', 'Laptops', 'Smartphones', 'Audio', 'Wearables', 'Tablets', 'Monitors', 'Accessories']
 const statuses = ['All', 'Active', 'Draft', 'Archived']
-
 const EditDrawer: React.FC<{
   product: Product | null
   onClose: () => void
@@ -383,7 +382,6 @@ const ProductsPage: React.FC = () => {
 
       <Card noPad delay={0.05}>
         <div className="flex flex-wrap items-center gap-3 p-4 sm:p-5">
-          {/* Search */}
           <div className="relative flex-1 min-w-[180px]">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
             <input value={search} onChange={e => setSearch(e.target.value)}

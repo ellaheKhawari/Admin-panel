@@ -1,14 +1,11 @@
-import { toast } from 'sonner'
 import React, { useMemo, useState } from 'react'
-import { Search, ArrowUpDown, MoreVertical, Trash2, UserCheck } from 'lucide-react'
-import { toast } from 'sonner'
+import { Search, ArrowUpDown, MoreVertical } from 'lucide-react'
 import { PageHeader } from '../../components/ui/PageHeader'
 import { Card } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
 import { customers } from '../../data/mock'
 import { toast } from 'sonner'
 import type { Customer } from '../../types'
-import { useState as useStateAlias } from 'react'
 
 const PAGE_SIZE = 5
 
