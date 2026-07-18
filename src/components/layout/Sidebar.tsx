@@ -17,13 +17,8 @@ export const Sidebar: React.FC = () => {
   const location = useLocation()
   const isDesktop = useIsDesktop()
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({})
-
   const isChildActive = (children?: { to: string }[]) =>
     !!children?.some((c) => location.pathname === c.to)
-
-  // KEY FIX: Framer Motion controls ALL transforms.
-  // On mobile: x slides in/out based on sidebarOpen.
-  // On desktop: x is always 0; only width animates (collapsed/expanded).
   const sidebarWidth = sidebarCollapsed && isDesktop ? 80 : 264
   const sidebarX = isDesktop ? 0 : (sidebarOpen ? 0 : -300)
 

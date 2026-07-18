@@ -66,7 +66,6 @@ export const Header: React.FC = () => {
       </div>
 
       <div className="ml-auto flex items-center gap-1 sm:gap-2">
-        {/* Dark/Light toggle */}
         <button onClick={toggleDark} className="focus-ring rounded-lg p-2.5 text-slate-500 hover:bg-base-700/40" aria-label="Toggle theme">
           <AnimatePresence mode="wait" initial={false}>
             <motion.span key={dark ? 'moon' : 'sun'}
@@ -79,7 +78,6 @@ export const Header: React.FC = () => {
           </AnimatePresence>
         </button>
 
-        {/* Notifications */}
         <div className="relative">
           <button onClick={() => { setNotifOpen((v) => !v); setProfileOpen(false) }}
             className="focus-ring relative rounded-lg p-2.5 text-slate-500 hover:bg-base-700/40">
@@ -103,7 +101,6 @@ export const Header: React.FC = () => {
           </AnimatePresence>
         </div>
 
-        {/* Profile */}
         <div className="relative">
           <button onClick={() => { setProfileOpen((v) => !v); setNotifOpen(false) }}
             className="focus-ring flex items-center gap-2 rounded-lg py-1.5 pl-1.5 pr-2.5 hover:bg-base-700/40">

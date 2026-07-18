@@ -31,12 +31,6 @@ export const Layout: React.FC = () => {
         <LoadingBar show={loading} />
         <Header />
         <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8 max-w-screen-2xl w-full mx-auto">
-          {/*
-            FIX: use location.key (not pathname) so AnimatePresence sees a unique
-            key on every navigation, and use mode="wait" so the exit animation
-            finishes BEFORE the new page enters — avoiding both instances
-            being in the DOM at the same time.
-          */}
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={location.key}
