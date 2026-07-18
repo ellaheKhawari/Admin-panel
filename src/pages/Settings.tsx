@@ -22,7 +22,6 @@ const Settings: React.FC = () => {
   const { dark, setDark } = useTheme()
   const { user, updateProfile } = useAuth()
 
-  // ── Synced form state ──
   const [generalForm, setGeneralForm] = useState({
     name: user?.name ?? '', email: user?.email ?? '',
     language: user?.language ?? 'en', timezone: user?.timezone ?? 'cet',
@@ -33,7 +32,6 @@ const Settings: React.FC = () => {
     sms:   user?.smsNotif   ?? false,
   })
 
-  // ✅ Re-sync if user loads after mount (e.g. fresh login)
   useEffect(() => {
     if (!user) return
     setGeneralForm({ name: user.name, email: user.email, language: user.language, timezone: user.timezone })
@@ -54,7 +52,6 @@ const Settings: React.FC = () => {
       <PageHeader title="Settings" crumbs={['Account', 'Settings']} />
       <div className="grid gap-5 lg:grid-cols-4">
 
-        {/* Sidebar nav */}
         <Card noPad delay={0} className="h-fit lg:col-span-1">
           <nav className="p-2">
             {sections.map((s) => (
@@ -71,10 +68,10 @@ const Settings: React.FC = () => {
           </nav>
         </Card>
 
-        {/* Panel */}
+
         <Card className="lg:col-span-3" delay={0.05}>
 
-          {/* ── General ── */}
+
           {active === 'general' && (
             <>
               <h3 className="mb-5 font-display text-lg font-semibold text-slate-900 dark:text-white">General Information</h3>
@@ -113,7 +110,6 @@ const Settings: React.FC = () => {
             </>
           )}
 
-          {/* ── Notifications ── */}
           {active === 'notifications' && (
             <>
               <h3 className="mb-5 font-display text-lg font-semibold text-slate-900 dark:text-white">Notification Preferences</h3>
@@ -143,7 +139,6 @@ const Settings: React.FC = () => {
             </>
           )}
 
-          {/* ── Billing ── */}
           {active === 'billing' && (
             <>
               <h3 className="mb-5 font-display text-lg font-semibold text-slate-900 dark:text-white">Billing & Plan</h3>
@@ -179,12 +174,10 @@ const Settings: React.FC = () => {
             </>
           )}
 
-          {/* ── Appearance ── */}
           {active === 'appearance' && (
             <>
               <h3 className="mb-5 font-display text-lg font-semibold text-slate-900 dark:text-white">Appearance</h3>
 
-              {/* Theme selector */}
               <p className="mb-3 text-sm font-medium text-slate-700 dark:text-slate-300">Color theme</p>
               <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {[

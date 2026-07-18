@@ -9,7 +9,6 @@ import { Button } from '../components/ui/Button'
 import { Field, Input, Textarea } from '../components/ui/Form'
 import { useAuth } from '../context/AuthContext'
 
-/* ─── helpers ────────────────────────────────────────────── */
 const resizeImage = (file: File, maxSide = 512): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader()
@@ -30,7 +29,6 @@ const resizeImage = (file: File, maxSide = 512): Promise<string> =>
     reader.readAsDataURL(file)
   })
 
-/* ─── Avatar bubble ──────────────────────────────────────── */
 const Avatar: React.FC<{ src: string | null; name: string; size?: string }> = ({ src, name, size = 'h-24 w-24' }) => {
   const initials = name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
   if (src) return <img src={src} alt={name} className={clsx(size, 'rounded-2xl object-cover ring-4 ring-white dark:ring-base-900')} />
@@ -41,7 +39,6 @@ const Avatar: React.FC<{ src: string | null; name: string; size?: string }> = ({
   )
 }
 
-/* ─── Message chat panel ─────────────────────────────────── */
 type Msg = { id: number; from: 'them' | 'me'; text: string; time: string }
 
 const INIT_MSGS: Msg[] = [
@@ -79,7 +76,6 @@ const MessagePanel: React.FC<{ open: boolean; onClose: () => void; contactName: 
     setDraft('')
     const myMsg: Msg = { id: Date.now(), from: 'me', text, time: now() }
     setMsgs(prev => [...prev, myMsg])
-    // Fake reply after 1.2s
     await new Promise(r => setTimeout(r, 1200))
     const replies = [
       'Got it! I\'ll look into that right away.',
@@ -115,7 +111,6 @@ const MessagePanel: React.FC<{ open: boolean; onClose: () => void; contactName: 
             className="fixed right-0 inset-y-0 z-50 flex w-full max-w-sm flex-col shadow-2xl"
             style={{ background: 'var(--glass-bg)', backdropFilter: 'blur(24px)', borderLeft: '1px solid var(--border-alpha)' }}
           >
-            {/* Header */}
             <div className="flex items-center gap-3 border-b px-5 py-4" style={{ borderColor: 'var(--border-alpha)' }}>
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-accent-400 to-glow-cyan text-sm font-bold text-white">
                 {contactName.split(' ').map(n => n[0]).join('').slice(0, 2)}
@@ -131,7 +126,6 @@ const MessagePanel: React.FC<{ open: boolean; onClose: () => void; contactName: 
               </button>
             </div>
 
-            {/* Messages */}
             <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
               {msgs.map((m) => (
                 <motion.div
@@ -167,7 +161,6 @@ const MessagePanel: React.FC<{ open: boolean; onClose: () => void; contactName: 
               <div ref={bottomRef} />
             </div>
 
-            {/* Input */}
             <div className="border-t p-4" style={{ borderColor: 'var(--border-alpha)' }}>
               <div className="flex items-center gap-2">
                 <input
@@ -196,10 +189,8 @@ const MessagePanel: React.FC<{ open: boolean; onClose: () => void; contactName: 
   )
 }
 
-/* ─── Tabs ────────────────────────────────────────────────── */
 const TABS = ['Overview', 'Edit Profile', 'Security']
 
-/* ─── Main page ───────────────────────────────────────────── */
 const Profile: React.FC = () => {
   const { user, updateProfile, uploadAvatar, uploadBanner } = useAuth()
   const [tab, setTab] = useState('Overview')
@@ -265,15 +256,12 @@ const Profile: React.FC = () => {
       <div>
         <PageHeader title="Profile" crumbs={['Account']} />
 
-        {/* Cover + Avatar card */}
         <Card delay={0} noPad>
-          {/* Banner */}
           <div className="relative h-40 overflow-hidden rounded-t-xl2">
             {user?.bannerImage
               ? <img src={user.bannerImage} alt="Cover" className="h-full w-full object-cover" />
               : <div className="h-full w-full bg-gradient-to-r from-accent-600 via-accent-500 to-glow-cyan/60" />
             }
-            {/* Banner upload button */}
             <button
               onClick={() => bannerRef.current?.click()}
               className="focus-ring absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg bg-black/50 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm hover:bg-black/70 transition-colors"
@@ -284,7 +272,6 @@ const Profile: React.FC = () => {
               onChange={(e) => handleImageUpload(e.target.files?.[0], 'banner')} />
           </div>
 
-          {/* Avatar + actions */}
           <div className="px-5 pb-6 sm:px-6">
             <div className="-mt-12 flex flex-wrap items-end justify-between gap-4">
               <div className="flex items-end gap-4">
@@ -316,7 +303,6 @@ const Profile: React.FC = () => {
               {user?.website  && <span className="flex items-center gap-1.5"><Globe className="h-4 w-4 shrink-0" />{user.website}</span>}
             </div>
 
-            {/* Tabs */}
             <div className="mt-6 flex gap-1 border-b border-base-600">
               {TABS.map((t) => (
                 <button key={t} onClick={() => setTab(t)}
@@ -330,7 +316,6 @@ const Profile: React.FC = () => {
           </div>
         </Card>
 
-        {/* Tab content */}
         <div className="mt-5">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div key={tab} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.18 }}>
@@ -377,7 +362,6 @@ const Profile: React.FC = () => {
                     )}
                   </div>
 
-                  {/* Avatar change in form */}
                   <div className="mb-6 flex items-center gap-4">
                     <Avatar src={user?.avatar ?? null} name={user?.name ?? 'AM'} size="h-16 w-16" />
                     <div>

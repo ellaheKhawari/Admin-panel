@@ -12,8 +12,9 @@ import { Card } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
 import { Button } from '../../components/ui/Button'
 import { Field, Input, Textarea, Select } from '../../components/ui/Form'
-import { products as initialProducts, type Product } from '../../data/mock'
+import { products as initialProducts} from '../../data/mock'
 import { Link } from 'react-router-dom'
+import {Product} from "@/types";
 
 const categories = ['All', 'Laptops', 'Smartphones', 'Audio', 'Wearables', 'Tablets', 'Monitors', 'Accessories']
 const statuses = ['All', 'Active', 'Draft', 'Archived']

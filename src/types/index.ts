@@ -22,6 +22,7 @@ export type NavItem = {
 }
 
 export type ProductStatus = 'Active' | 'Draft' | 'Archived'
+
 export type ProductCategory = 'Laptop' | 'Smartphone' | 'Tablet' | 'Audio' | 'Watch' | 'Accessories' | 'Display'
 
 export type Product = {
