@@ -1,21 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
+import {ThemeCtx} from "@/types";
 
-type ThemeCtx = {
-  dark: boolean
-  setDark: (v: boolean) => void
-  toggleDark: () => void
-  sidebarOpen: boolean
-  setSidebarOpen: (v: boolean) => void
-  sidebarCollapsed: boolean
-  toggleCollapsed: () => void
-}
 
 const Ctx = createContext<ThemeCtx | null>(null)
-
 const THEME_KEY = 'nova_theme'
-
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // ✅ Synchronously read from localStorage so dark class is applied before first paint
   const [dark, setDarkState] = useState<boolean>(() => {
     try {
       const stored = localStorage.getItem(THEME_KEY)

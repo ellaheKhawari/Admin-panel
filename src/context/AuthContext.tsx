@@ -1,22 +1,6 @@
 import React, { createContext, useContext, useState, useCallback } from 'react'
-
-export type UserProfile = {
-  id: string; name: string; email: string; phone: string; location: string;
-  bio: string; role: string; avatar: string | null; bannerImage: string | null;
-  website: string; joinedAt: string; language: string; timezone: string;
-  twoFactor: boolean; emailNotif: boolean; pushNotif: boolean; smsNotif: boolean;
-  plan: 'Free' | 'Pro' | 'Enterprise'
-}
-
-const DEFAULT_USER: UserProfile = {
-  id: 'usr_default', name: 'Amir Moradi', email: 'amir@nova.io',
-  phone: '+49 30 1234 5678', location: 'Hamburg, Germany',
-  bio: 'Product designer focused on dashboards and data-dense interfaces. Previously led design systems at two early-stage startups.',
-  role: 'Product Designer · Nova Inc.', avatar: null, bannerImage: null,
-  website: 'nova.io/amir', joinedAt: '2025-01-15', language: 'en',
-  timezone: 'cet', twoFactor: false, emailNotif: true, pushNotif: false,
-  smsNotif: false, plan: 'Pro',
-}
+import {AuthCtx, UserProfile} from "@/types";
+import {DEFAULT_USER} from "@/data/mock.ts";
 
 const TOKEN_KEY = 'nova_token'
 const USER_KEY  = 'nova_user'
@@ -27,17 +11,6 @@ const loadUser = (): UserProfile | null => {
 }
 const saveUser = (u: UserProfile) => { try { localStorage.setItem(USER_KEY, JSON.stringify(u)) } catch {} }
 const genToken = (email: string) => btoa(`nova:${email}:${Date.now()}:${Math.random().toString(36)}`)
-
-type AuthCtx = {
-  user: UserProfile | null; token: string | null; isAuthed: boolean
-  fakeLogin: (email: string, password: string) => Promise<void>
-  fakeRegister: (name: string, email: string, password: string) => Promise<void>
-  updateProfile: (updates: Partial<UserProfile>) => Promise<void>
-  uploadAvatar: (dataUrl: string) => Promise<void>
-  uploadBanner: (dataUrl: string) => Promise<void>
-  logout: () => void
-}
-
 const Ctx = createContext<AuthCtx | null>(null)
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

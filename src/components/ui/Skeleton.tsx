@@ -52,13 +52,11 @@ export const SkeletonTable: React.FC<{ rows?: number }> = ({ rows = 5 }) => (
 
 export const SkeletonDashboard: React.FC = () => (
   <div className="space-y-5 animate-fade-up">
-    {/* Stat cards */}
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {[0, 1, 2, 3].map((i) => (
         <SkeletonCard key={i} />
       ))}
     </div>
-    {/* Charts row */}
     <div className="grid gap-5 lg:grid-cols-3">
       <div className="glass rounded-xl2 p-5 shadow-glass lg:col-span-2">
         <Skeleton className="mb-1 h-5 w-36" />
@@ -74,12 +72,10 @@ export const SkeletonDashboard: React.FC = () => (
         </div>
       </div>
     </div>
-    {/* Table */}
     <SkeletonTable rows={4} />
   </div>
 )
 
-/** Thin animated progress bar shown during page transitions */
 export const LoadingBar: React.FC<{ show: boolean }> = ({ show }) => {
   const [width, setWidth] = React.useState(0)
 

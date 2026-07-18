@@ -1,4 +1,4 @@
-import type { Order, Customer, Invoice, CalendarEvent, Product } from '../types'
+import {Order, Customer, Invoice, CalendarEvent, Product, UserProfile} from '../types'
 
 export const monthly = [
   { month: 'Jan', sales: 145, target: 200, revenue: 38 },
@@ -393,3 +393,13 @@ export const products: Product[] = [
     sku: 'ANKR-200W-GAN', tags: ['anker', 'charger', 'accessories'], createdAt: '2025-10-20',
   },
 ]
+
+export const DEFAULT_USER: UserProfile = {
+    id: 'usr_default', name: 'Amir Moradi', email: 'amir@nova.io',
+    phone: '+49 30 1234 5678', location: 'Hamburg, Germany',
+    bio: 'Product designer focused on dashboards and data-dense interfaces. Previously led design systems at two early-stage startups.',
+    role: 'Product Designer · Nova Inc.', avatar: null, bannerImage: null,
+    website: 'nova.io/amir', joinedAt: '2025-01-15', language: 'en',
+    timezone: 'cet', twoFactor: false, emailNotif: true, pushNotif: false,
+    smsNotif: false, plan: 'Pro',
+}
