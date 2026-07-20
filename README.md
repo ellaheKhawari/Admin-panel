@@ -6,7 +6,7 @@
 
 Featuring code-split routing, an animated loading experience, a full products management module, and toast-driven feedback throughout.
 
-[**🔗 Live Demo**](https://nova-adminpanel.netlify.app/)
+[**🔗 Live Demo**](https://admin-panel.ellahe-khawari.workers.dev)
 
 </div>
 
